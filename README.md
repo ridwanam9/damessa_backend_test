@@ -88,8 +88,7 @@ backend-developer-mini-project/
 ## 🔍 API Endpoints & Examples
 
 
-
-### Get Routes
+### Health
 
 ```bash
 GET /health
@@ -399,3 +398,15 @@ Response:
 }
 ```
 
+### 🔹 Product API (extended features)
+#### Get Products (with filter & pagination)
+```http
+GET /api/products?category=Electronics&page=1&limit=10
+Authorization: Bearer <token>
+```
+
+## ✅ Notes
+
+All Category and Product deletions are soft delete (deletedAt timestamp is set).
+
+Use Postman/Thunder Client for testing, or import the provided Postman Collection.
