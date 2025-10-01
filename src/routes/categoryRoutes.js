@@ -1,9 +1,19 @@
 const express = require("express");
+const auth = require("../middlewares/authMiddleware");
+const {
+  createCategory,
+  getCategories,
+  getCategory,
+  updateCategory,
+  deleteCategory,
+} = require("../controllers/categoryController");
+
 const router = express.Router();
 
-// contoh route kosong
-router.get("/", (req, res) => {
-  res.json({ message: "Category route working" });
-});
+router.post("/", auth, createCategory);
+router.get("/", auth, getCategories);
+router.get("/:id", auth, getCategory);
+router.put("/:id", auth, updateCategory);
+router.delete("/:id", auth, deleteCategory);
 
 module.exports = router;
