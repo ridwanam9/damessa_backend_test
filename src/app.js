@@ -3,12 +3,34 @@ const app = express();
 const sequelize = require("./config/database");
 
 // console.log(require("./routes/userRoutes"));
+console.log("User routes loaded:", require("./routes/userRoutes"));
 
 
 app.use(express.json());
 
 // Routes
-app.use("/api", require("./routes/userRoutes"));
+
+app.get("/health", async (req, res) => {
+  try {
+    // cek database connection
+    await sequelize.authenticate();
+    res.json({ 
+      status: "ok", 
+      db: "connected", 
+      uptime: process.uptime() 
+    });
+  } catch (err) {
+    res.status(500).json({ 
+      status: "error", 
+      db: "disconnected", 
+      message: err.message 
+    });
+  }
+});
+
+
+
+app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/categories", require("./routes/categoryRoutes"));
 app.use("/api/products", require("./routes/productRoutes"));
 
