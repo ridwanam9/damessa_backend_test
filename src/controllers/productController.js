@@ -19,12 +19,32 @@ exports.createProduct = async (req, res) => {
 
 exports.getProducts = async (req, res) => {
   try {
-    const products = await Product.findAll({ include: Category });
-    res.json(products);
+    const { category, page = 1, limit = 10 } = req.query;
+    const offset = (page - 1) * limit;
+
+    const where = {};
+    if (category) {
+      where["$Category.name$"] = category; // filter by category name
+    }
+
+    const products = await Product.findAndCountAll({
+      where,
+      include: Category,
+      limit: parseInt(limit),
+      offset: parseInt(offset)
+    });
+
+    res.json({
+      total: products.count,
+      page: parseInt(page),
+      limit: parseInt(limit),
+      data: products.rows
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
+
 
 exports.getProduct = async (req, res) => {
   try {
