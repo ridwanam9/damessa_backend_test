@@ -85,7 +85,26 @@ backend-developer-mini-project/
  – Auto-restart in development
 
 
-## 🔍 API Endpoints & Examples
+## 🔎 Logger Middleware
+
+Every incoming request is logged with timestamp, HTTP method, and URL.
+
+Code (src/middlewares/logger.js):
+```js
+module.exports = (req, res, next) => {
+  const now = new Date().toISOString();
+  console.log(`[${now}] ${req.method} ${req.originalUrl}`);
+  next();
+};
+
+```
+Example logs in terminal:
+```bash
+[2025-10-01T10:00:00.000Z] GET /health
+[2025-10-01T10:01:20.000Z] POST /api/users/login
+```
+
+## 📖 API Endpoints & Examples
 
 
 ### Health

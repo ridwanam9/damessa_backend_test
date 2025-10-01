@@ -1,12 +1,10 @@
 const express = require("express");
 const app = express();
 const sequelize = require("./config/database");
-
-// console.log(require("./routes/userRoutes"));
-console.log("User routes loaded:", require("./routes/userRoutes"));
-
+const logger = require("./middlewares/logger");
 
 app.use(express.json());
+app.use(logger);
 
 // Routes
 
